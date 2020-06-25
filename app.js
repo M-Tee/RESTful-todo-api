@@ -5,12 +5,11 @@ import bodyParser from 'body-parser';
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended:false}));
+app.use(bodyParser.urlencoded({extended:false}));
 
-app.get('api/v1/todos', (req, res) =>
-{
+app.get('/api/v1/todos', (req, res) => {
     res.status(200).send({
-        success:' true',
+        success: 'true',
         message: 'todos retrieved successfully',
         todos: db
     })
@@ -18,13 +17,12 @@ app.get('api/v1/todos', (req, res) =>
 
 const PORT = 5000;
 
-app.listen (PORT, () =>
-{
+app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`)
 });
 
-app.post('api/v1/todos', (req, res) =>
-{
+// Create a todo 
+app.post('/api/v1/todos', (req, res) => {
     if (!req.body.title){
         return res.status(400).send({
             success: 'false',
@@ -50,9 +48,9 @@ app.post('api/v1/todos', (req, res) =>
     })
 });
 
-app.get('/api/v1/todos/:id', (req, res) =>
-{
-    const id = parseInt(req.params.id, 10);
+// GET A SINGLE TODO
+app.get('/api/v1/todos/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10); //Coverts Id into int
 
     db.map((todo) => {
         if (todo.id === id){
